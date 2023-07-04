@@ -13,22 +13,20 @@ function loadDoc(e) {
         var dato = document.createTextNode(reader.result);
         content.appendChild(dato);
         var doc = new DOMParser().parseFromString(reader.result, 'application/xml')
-       // console.log(doc);
+        console.log("dato",dato)
+        console.log("doc",doc);
 
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/xml");
 
-
-        const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
-<root>
-  <element>Contenido del elemento</element>
-</root>`;
-
-        fetch('http://localhost:5000/validate-xml', {
+        var requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-            body: dato
-        })
+            headers: myHeaders,
+            body: dato.textContent,
+            redirect: 'follow'
+        };
+
+        fetch('http://localhost:5000/validate-xml', requestOptions)
             .then(response => {
                 if (response.ok) {
                     return response.text();

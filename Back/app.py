@@ -1,17 +1,19 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from lxml import etree
 import xmltodict
 import json
 
 
+
 app = Flask(__name__)
+CORS(app)  # Configura CORS para permitir todas las solicitudes desde cualquier origen
 
 
 @app.route("/validate-xml", methods=["POST"])
 def validate_xml():
     xml_data = request.data.decode('utf-8')  # Obtener el XML enviado en el cuerpo de la solicitud
     xsd_path = "../XML/MicroSerFor.xsd"  # Ruta al archivo XSD que se utilizará para validar el XML
-
     # Parsear el XML y el XSD
     xml_tree = etree.fromstring(xml_data)
     xsd_tree = etree.parse(xsd_path)
@@ -29,70 +31,15 @@ def validate_xml():
             # El XML es válido
             # Extraer la información relevante del XML y formatearla en JSON
             json_data = xml_to_json(xml_data)
-            # print(json_data)
 
-            # nombre_entidades = xml_data.xpath("//nombreEntidad/text()")
-            # servicios = xml_data.xpath("//Servicio")
-            # entidades = []
-
-            # for entidad in xml_data.xpath("//Entidades"):
-            #     nombre_entidad = entidad.xpath(".//nombreEntidad/text()")[0]
-            #     atributos = []
-
-            #     for atributo in entidad.xpath(".//atributo"):
-            #         nombre_atributo = atributo.xpath(".//nombreAtributo/text()")[0]
-            #         tipo_atributo = atributo.xpath(".//tipoAtributo/text()")[0]
-            #         restricciones = atributo.xpath(".//restricionAtributo/text()")
-
-            #         atributos.append(
-            #             {
-            #                 "nombreAtributo": nombre_atributo,
-            #                 "tipoAtributo": tipo_atributo,
-            #                 "restricciones": restricciones,
-            #             }
-            #         )
-
-            #     entidad_primaria = entidad.xpath(".//atributoPrimario")[0]
-            #     nombre_primario = entidad_primaria.xpath(".//nombreAtributo/text()")[0]
-            #     tipo_primario = entidad_primaria.xpath(".//tipoAtributo/text()")[0]
-            #     restricciones_primario = entidad_primaria.xpath(
-            #         ".//restricionAtributo/text()"
-            #     )
-
-            #     servicios_entidad = []
-            #     for servicio in entidad.xpath(".//Servicio"):
-            #         tipo_servicio = servicio.xpath(".//tipoServicio/text()")[0]
-            #         nombre_servicio = servicio.xpath(".//nombreServicio/text()")[0]
-
-            #         servicios_entidad.append(
-            #             {
-            #                 "tipoServicio": tipo_servicio,
-            #                 "nombreServicio": nombre_servicio,
-            #             }
-            #         )
-
-            #     entidades.append(
-            #         {
-            #             "nombreEntidad": nombre_entidad,
-            #             "atributos": atributos,
-            #             "atributoPrimario": {
-            #                 "nombreAtributo": nombre_primario,
-            #                 "tipoAtributo": tipo_primario,
-            #                 "restricciones": restricciones_primario,
-            #             },
-            #             "servicios": servicios_entidad,
-            #         }
-            #     )
-
-            print(json_data)
+            conexion_XML = json_data["App"]
 
             # Crear la respuesta JSON con la información extraída
             response = {
                 "status": "success",
                 "message": "El archivo XML es válido.",
-                "JSON":json_data
-                # "nombreEntidades": nombre_entidades,
-                # "entidades": entidades,
+                "Entidades":conexion_XML["Entidades"],
+                "Conexion":conexion_XML["Conexion"]
             }
 
             return jsonify(response)
@@ -126,7 +73,7 @@ def xml_to_json(xml_string):
     # Convertir diccionario a JSON
     json_data = json.dumps(xml_dict, indent=4)
 
-    return json_data
+    return json.loads(json_data)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
