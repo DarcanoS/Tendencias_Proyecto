@@ -13,8 +13,8 @@ function loadDoc(e) {
         var dato = document.createTextNode(reader.result);
         content.appendChild(dato);
         var doc = new DOMParser().parseFromString(reader.result, 'application/xml')
-        console.log("dato",dato)
-        console.log("doc",doc);
+        console.log("dato", dato)
+        console.log("doc", doc);
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/xml");
@@ -27,17 +27,23 @@ function loadDoc(e) {
         };
 
         fetch('http://localhost:5000/validate-xml', requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                }
-                throw new Error('Error en la petición POST');
-            })
-            .then(data => {
-                console.log('Respuesta del servidor:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            .then(response => response.blob())
+            .then(blob => {
+                // Crear un objeto URL para el blob del archivo recibido
+                const url = window.URL.createObjectURL(blob);
+
+                // Crear un elemento de enlace de descarga
+                const link = document.createElement('a');
+                link.href = url;
+
+                // Establecer el nombre del archivo
+                link.download = 'archivo.zip';
+
+                // Simular un clic en el enlace para iniciar la descarga
+                link.click();
+
+                // Liberar el objeto URL
+                window.URL.revokeObjectURL(url);
             });
     }
 }

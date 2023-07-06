@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="formulario.css">
+
+</head>
+
+<body>
+    <form id="datos_form" method="post" action="" class="formulario">
+        <h1 class="formulario__titulo">Información Microservicio</h1>
+
+
+        <h2 class="formulario__titulo" id="Entidades">Entidad:</h2>
+
+        <label class="formulario__boton" onclick=" duplicar( this ) ">
+            Agregar nueva Entidad
+        </label>
+
+        <div class="cl">
+            <input type="text" class="formulario__input" name="nombreEntidad">
+            <label for="" class="formulario__label">Nombre:</label>
+
+
+            <h2 class="formulario__titulo" id="atributoPrimario">Atributo Primario:</h2>
+            <div class="cl">
+                <input type="text" class="formulario__input" name="nombreAtributo">
+                <label for="" class="formulario__label">Nombre:</label>
+                <select name="TipoAtributo" class="formulario__input">
+                    <option value="String">String</option>
+                    <option value="Int32">Int(32)</option>
+                </select>
+            </div>
+
+            <h2 class="formulario__titulo" id="atributo">Atributo:</h2>
+            <label class="formulario__boton" onclick=" duplicar( this ) ">Agregar nuevo Atributo</label>
+            <div class="cl">
+                <input type="text" name="nombreAtributo" class="formulario__input">
+                <label for="" class="formulario__label">Nombre:</label>
+                <select name="TipoAtributo" class="formulario__input">
+                    <option value="String">String</option>
+                    <option value="Int32">Int(32)</option>
+                </select>
+            </div>
+            <div id="contenedor"> </div>
+
+            <h2 class="formulario__titulo" id="Servicio">Servicio:</h2>
+            <label class="formulario__boton" onclick=" duplicar( this ) "> Agregar nuevo Servicio</label>
+            <div class="cl">
+                <select name="TipoServicio" class="formulario__input">
+                    <option value="update">update</option>
+                    <option value="create">create</option>
+                    <option value="delete">delete</option>
+                    <option value="readAll">readAll</option>
+                    <option value="readOne">readOne</option>
+                </select>
+                <input type="text" name="nombreServicio" class="formulario__input">
+                <label for="" class="formulario__label">Nombre:</label>
+            </div>
+            <div id="contenedor"> </div>
+
+
+        </div>
+        <div id="contenedor"> </div>
+
+        <div class="cl">
+            <h2 class="formulario__titulo" id="Conexion">Conexión:</h2>
+            <input type="text" name="url" class="formulario__input">
+            <label for="" class="formulario__label">URL:</label>
+            <input type="number" name="puerto" class="formulario__input">
+            <label for="" class="formulario__label">Puerto:</label>
+            <input type="text" name="database" class="formulario__input">
+            <label for="" class="formulario__label">Base de Datos:</label>
+            <input type="text" name="usuario" class="formulario__input">
+            <label for="" class="formulario__label">Usuario:</label>
+            <input type="text" name="password" class="formulario__input">
+            <label for="" class="formulario__label">Contraseña:</label>
+            <input type="text" name="controlador" class="formulario__input">
+            <label for="" class="formulario__label">Controlador:</label>
+        </div>
+        <input type="submit" class="formulario__submit">
+
+    </form>
+    <script src="formulario.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+html {
+  box-sizing: border-box;
+}
+
+pre{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+
+  padding: 50px;
+  padding-bottom: 100%;
+  width: 100%;
+  grid-gap: 0 20px;
+
+  margin: 0;
+  font-family: sans-serif;
+  background-image: linear-gradient(to bottom,
+      rgba(82, 135, 151, 1),
+      rgba(37, 75, 102, 1));
+
+}
+
+
+#xmlCarga {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  width: 500px;
+  max-width: 100%;
+  margin: auto;
+  margin-top: 30px;
+  padding: 20px;
+  position: relative;
+}
+
+#xmlCarga input {
+  display: none;
+}
+
+#xmlCarga label {
+  background-color: #00AF3F;
+  border-radius: 25px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 200;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 20px;
+}
+
+#respuesta {
+  max-width: 100%;
+  margin: auto;
+  margin-top: 30px;
+  padding: 10px;
+}
+
+#respuesta td,
+#respuesta th {
+  color: #444;
+  font-size: 14px;
+  padding: 15px 15px;
+}
+
+#respuesta thead {
+  border-bottom: 2px solid #ddd;
+}
+
+#respuesta thead th {
+  background-color: #f5f5f5;
+}
+
+#respuesta tbody {
+  padding: 10px;
+}
+
+#respuesta tbody tr:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+#respuesta tbody td:not(:last-child) {
+  border-right: 1px solid #eee;
+}

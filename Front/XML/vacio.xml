@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<App 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="./MicroSerFor.xsd">
+<nombreEntidad>sxfh</nombreEntidad>
+<nombreAtributo>shsr</nombreAtributo>
+<TipoAtributo>String</TipoAtributo>
+<nombreAtributo>srhsr</nombreAtributo>
+<TipoAtributo>String</TipoAtributo>
+<TipoServicio>update</TipoServicio>
+<nombreServicio>srhsrh</nombreServicio>
+<url>srhrs</url>
+<puerto>53</puerto>
+<database>srhys</database>
+<usuario>srhrh</usuario>
+<password>srhsryh</password>
+<controlador>srhsrh</controlador>
+</App>
+
+
+<?xml version="1.0"?>
+<App xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="./MicroSerFor.xsd">
+ <Entidades>
+     <nombreEntidad>fhdfh</nombreEntidad>
+     <TipoAtributo>String</TipoAtributo>
+     <TipoAtributo>String</TipoAtributo>
+     <TipoServicio>update</TipoServicio>
+     <nombreServicio>dghdgh</nombreServicio>
+     <url>dghdtgh</url>
+     <puerto>876</puerto>
+     <database>wstgw</database>
+     <usuario>sgsg</usuario>
+     <password>sgsfdg</password>
+     <controlador>sergtwe</controlador>
+    </Entidades>
+        <atributo>
+            <nombreAtributo>dghdth</nombreAtributo>
+            <nombreAtributo>dghdghd</nombreAtributo>
+        </atributo></App>

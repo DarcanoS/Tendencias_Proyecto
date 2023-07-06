@@ -22,7 +22,7 @@
                             </xs:element>
                             <!-- El atributo primario es la llave de la entidad, debe tener minimo
                             una, puede tener llaves compuestas -->
-                            <!-- <xs:element name="atributoPrimario" minOccurs="1" maxOccurs="unbounded">
+                            <xs:element name="atributoPrimario" minOccurs="1" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="nombreAtributo" type="xs:string" />
@@ -31,9 +31,9 @@
                                             maxOccurs="unbounded" />
                                     </xs:sequence>
                                 </xs:complexType>
-                            </xs:element> -->
+                            </xs:element>
                             <!-- Este vendría a ser el EndPoint -->
-                            <xs:element name="Servicio" minOccurs="0" maxOccurs="5">
+                            <xs:element name="Servicio" minOccurs="0" maxOccurs="4">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="tipoServicio">
