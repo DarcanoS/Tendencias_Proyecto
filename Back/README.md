@@ -1,6 +1,6 @@
 # Flask Validate XML App
 
-Esta es una aplicación que lee y procesa un XML.
+Esta es una aplicación que lee y procesa un XML. Además de generar el codigo del API en lenguaje Python.
 
 ## Instalación
 
@@ -63,7 +63,7 @@ python app.py
 
 ## Uso
 
-- Para validar el XML 
+- Para validar el XML y retornar un comprimido con el Codigo Fuente.
 
         http://localhost:8000/validate-xml
 
