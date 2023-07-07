@@ -3,54 +3,53 @@ from pymongo.server_api import ServerApi
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-#Definicion del modelo Fruta CREATE
-class FrutaIn(BaseModel):
+#Definicion del modelo Usuario CREATE
+class UsuarioIn(BaseModel):
    id: int
-   nombreFruta: str
-   color: str
-   textura: str
-   sabor: str
-   cantSemillas: int
-   paisOrigen: str
+   user: str
+   password: str
 
-#Definicion del modelo Fruta UPDATE
-class FrutaInUP(BaseModel):
-   nombreFruta: str
-   color: str
-   textura: str
-   sabor: str
-   cantSemillas: int
-   paisOrigen: str
+#Definicion del modelo Usuario UPDATE
+class UsuarioInUP(BaseModel):
+   user: str
+   password: str
 
-#Definicion del modelo Fruta UPDATE
-class FrutaOut(BaseModel):
+#Definicion del modelo Usuario UPDATE
+class UsuarioOut(BaseModel):
    id: int
-   nombreFruta: str
-   color: str
-   textura: str
-   sabor: str
-   cantSemillas: int
-   paisOrigen: str
+   user: str
+   password: str
 
-#Definicion del modelo Verdura CREATE
-class VerduraIn(BaseModel):
+#Definicion del modelo Rol CREATE
+class RolIn(BaseModel):
    id: int
-   vitamina: str
-   mineral: str
-   tallos: int
+   nombre: str
 
-#Definicion del modelo Verdura UPDATE
-class VerduraInUP(BaseModel):
-   vitamina: str
-   mineral: str
-   tallos: int
+#Definicion del modelo Rol UPDATE
+class RolInUP(BaseModel):
+   nombre: str
 
-#Definicion del modelo Verdura UPDATE
-class VerduraOut(BaseModel):
+#Definicion del modelo Rol UPDATE
+class RolOut(BaseModel):
    id: int
-   vitamina: str
-   mineral: str
-   tallos: int
+   nombre: str
+
+#Definicion del modelo Permiso CREATE
+class PermisoIn(BaseModel):
+   id: int
+   descripcion: str
+   nombre: str
+
+#Definicion del modelo Permiso UPDATE
+class PermisoInUP(BaseModel):
+   descripcion: str
+   nombre: str
+
+#Definicion del modelo Permiso UPDATE
+class PermisoOut(BaseModel):
+   id: int
+   descripcion: str
+   nombre: str
 
 uri ='mongodb+srv://usuarioGeneral:ZWxGjUdSO9zffFwP@ud.wbeofk5.mongodb.net/?retryWrites=true&w=majority'
 
@@ -64,95 +63,138 @@ try:
 except Exception as e:
    print(e)
 
-db = client['Tendencias']
-collection_Fruta = db['Fruta']
-collection_Verdura = db['Verdura']
+db = client['Autenticador']
+collection_Usuario = db['Usuario']
+collection_Rol = db['Rol']
+collection_Permiso = db['Permiso']
 
 app = FastAPI()
 
-@app.get('/Fruta/{id}')
-def obtener_Fruta(id: int):
-   Fruta = list(collection_Fruta.find_one({'_id':id}))
-   if Fruta:
-       return {'Fruta': Fruta}
-   else:
-       raise HTTPException(status_code=404, detail='Fruta no encontrado')
-
-@app.get('/Fruta')
-def obtener_Fruta_all():
-   Fruta = list(collection_Fruta.find())
-   return {'Fruta': Fruta}
-
-@app.post('/Fruta')
-def agregar_Fruta(Fruta: FrutaIn):
-   nuevo_Fruta = {'_id':Fruta.id, 'nombreFruta': Fruta.nombreFruta, 'color': Fruta.color, 'textura': Fruta.textura, 'sabor': Fruta.sabor, 'cantSemillas': Fruta.cantSemillas, 'paisOrigen': Fruta.paisOrigen}
-   result = collection_Fruta.insert_one(nuevo_Fruta)
-   if result.inserted_id:
-       return {'mensaje': 'Fruta agregado exitosamente'}
-   else:
-       raise HTTPException(status_code=500, detail='Error al agregar Fruta')
-
-@app.put('/Fruta/{id}')
-def atualizar_Fruta(id:int,Fruta: FrutaInUP):
+@app.put('/Usuario/{id}')
+def atualizar_Usuario(id:int,Usuario: UsuarioInUP):
    filtro = {'_id': id}
-   nuevo_Fruta = {'$set': {'nombreFruta': Fruta.nombreFruta,'color': Fruta.color,'textura': Fruta.textura,'sabor': Fruta.sabor,'cantSemillas': Fruta.cantSemillas,'paisOrigen': Fruta.paisOrigen,}}
-   result = collection_Fruta.update_one(filtro,nuevo_Fruta)
+   nuevo_Usuario = {'$set': {'user': Usuario.user,'password': Usuario.password,}}
+   result = collection_Usuario.update_one(filtro,nuevo_Usuario)
    if result.modified_count:
-       Fruta_atualizado = collection_Fruta.find_one({'_id':id})
-       return {'Fruta Actualizado': Fruta_atualizado }
+       Usuario_atualizado = collection_Usuario.find_one({'_id':id})
+       return {'Usuario Actualizado': Usuario_atualizado }
    else:
-       raise HTTPException(status_code=500, detail='Error al buscar Fruta')
+       raise HTTPException(status_code=500, detail='Error al buscar Usuario')
 
-@app.delete('/Fruta/{id}')
-def eliminar_Fruta(id:int):
-   filtro = {'_id':id}
-   result = collection_Fruta.delete_one(filtro)
-   if result.deleted_count:
-       return {'mensaje': 'Fruta eliminado correctamente.' }
-   else:
-       raise HTTPException(status_code=500, detail='Error al buscar Fruta')
-
-@app.get('/buscarVerdura/{id}')
-def obtener_buscarVerdura(id: int):
-   Verdura = list(collection_Verdura.find_one({'_id':id}))
-   if Verdura:
-       return {'Verdura': Verdura}
-   else:
-       raise HTTPException(status_code=404, detail='Verdura no encontrado')
-
-@app.get('/buscarVerdura')
-def obtener_buscarVerdura_all():
-   Verdura = list(collection_Verdura.find())
-   return {'Verdura': Verdura}
-
-@app.post('/nuevaVerdura')
-def agregar_nuevaVerdura(Verdura: VerduraIn):
-   nuevo_Verdura = {'_id':Verdura.id, 'vitamina': Verdura.vitamina, 'mineral': Verdura.mineral, 'tallos': Verdura.tallos}
-   result = collection_Verdura.insert_one(nuevo_Verdura)
+@app.post('/Usuario')
+def agregar_Usuario(Usuario: UsuarioIn):
+   nuevo_Usuario = {'_id':Usuario.id, 'user': Usuario.user, 'password': Usuario.password}
+   result = collection_Usuario.insert_one(nuevo_Usuario)
    if result.inserted_id:
-       return {'mensaje': 'Verdura agregado exitosamente'}
+       return {'mensaje': 'Usuario agregado exitosamente'}
    else:
-       raise HTTPException(status_code=500, detail='Error al agregar Verdura')
+       raise HTTPException(status_code=500, detail='Error al agregar Usuario')
 
-@app.put('/editarVerdura/{id}')
-def atualizar_editarVerdura(id:int,Verdura: VerduraInUP):
-   filtro = {'_id': id}
-   nuevo_Verdura = {'$set': {'vitamina': Verdura.vitamina,'mineral': Verdura.mineral,'tallos': Verdura.tallos,}}
-   result = collection_Verdura.update_one(filtro,nuevo_Verdura)
-   if result.modified_count:
-       Verdura_atualizado = collection_Verdura.find_one({'_id':id})
-       return {'Verdura Actualizado': Verdura_atualizado }
-   else:
-       raise HTTPException(status_code=500, detail='Error al buscar Verdura')
-
-@app.delete('/editarVerdura/{id}')
-def eliminar_editarVerdura(id:int):
+@app.delete('/Usuario/{id}')
+def eliminar_Usuario(id:int):
    filtro = {'_id':id}
-   result = collection_Verdura.delete_one(filtro)
+   result = collection_Usuario.delete_one(filtro)
    if result.deleted_count:
-       return {'mensaje': 'Verdura eliminado correctamente.' }
+       return {'mensaje': 'Usuario eliminado correctamente.' }
    else:
-       raise HTTPException(status_code=500, detail='Error al buscar Verdura')
+       raise HTTPException(status_code=500, detail='Error al buscar Usuario')
+
+@app.get('/Usuario')
+def obtener_Usuario_all():
+   Usuario = list(collection_Usuario.find())
+   return {'Usuario': Usuario}
+
+@app.get('/Usuario/{id}')
+def obtener_Usuario(id: int):
+   Usuario = list(collection_Usuario.find_one({'_id':id}))
+   if Usuario:
+       return {'Usuario': Usuario}
+   else:
+       raise HTTPException(status_code=404, detail='Usuario no encontrado')
+
+@app.put('/Rol/{id}')
+def atualizar_Rol(id:int,Rol: RolInUP):
+   filtro = {'_id': id}
+   nuevo_Rol = {'$set': {'nombre': Rol.nombre,}}
+   result = collection_Rol.update_one(filtro,nuevo_Rol)
+   if result.modified_count:
+       Rol_atualizado = collection_Rol.find_one({'_id':id})
+       return {'Rol Actualizado': Rol_atualizado }
+   else:
+       raise HTTPException(status_code=500, detail='Error al buscar Rol')
+
+@app.post('/Rol')
+def agregar_Rol(Rol: RolIn):
+   nuevo_Rol = {'_id':Rol.id, 'nombre': Rol.nombre}
+   result = collection_Rol.insert_one(nuevo_Rol)
+   if result.inserted_id:
+       return {'mensaje': 'Rol agregado exitosamente'}
+   else:
+       raise HTTPException(status_code=500, detail='Error al agregar Rol')
+
+@app.delete('/Rol/{id}')
+def eliminar_Rol(id:int):
+   filtro = {'_id':id}
+   result = collection_Rol.delete_one(filtro)
+   if result.deleted_count:
+       return {'mensaje': 'Rol eliminado correctamente.' }
+   else:
+       raise HTTPException(status_code=500, detail='Error al buscar Rol')
+
+@app.get('/Rol')
+def obtener_Rol_all():
+   Rol = list(collection_Rol.find())
+   return {'Rol': Rol}
+
+@app.get('/Rol/{id}')
+def obtener_Rol(id: int):
+   Rol = list(collection_Rol.find_one({'_id':id}))
+   if Rol:
+       return {'Rol': Rol}
+   else:
+       raise HTTPException(status_code=404, detail='Rol no encontrado')
+
+@app.put('/Permiso/{id}')
+def atualizar_Permiso(id:int,Permiso: PermisoInUP):
+   filtro = {'_id': id}
+   nuevo_Permiso = {'$set': {'descripcion': Permiso.descripcion,'nombre': Permiso.nombre,}}
+   result = collection_Permiso.update_one(filtro,nuevo_Permiso)
+   if result.modified_count:
+       Permiso_atualizado = collection_Permiso.find_one({'_id':id})
+       return {'Permiso Actualizado': Permiso_atualizado }
+   else:
+       raise HTTPException(status_code=500, detail='Error al buscar Permiso')
+
+@app.post('/Permiso')
+def agregar_Permiso(Permiso: PermisoIn):
+   nuevo_Permiso = {'_id':Permiso.id, 'descripcion': Permiso.descripcion, 'nombre': Permiso.nombre}
+   result = collection_Permiso.insert_one(nuevo_Permiso)
+   if result.inserted_id:
+       return {'mensaje': 'Permiso agregado exitosamente'}
+   else:
+       raise HTTPException(status_code=500, detail='Error al agregar Permiso')
+
+@app.delete('/Permiso/{id}')
+def eliminar_Permiso(id:int):
+   filtro = {'_id':id}
+   result = collection_Permiso.delete_one(filtro)
+   if result.deleted_count:
+       return {'mensaje': 'Permiso eliminado correctamente.' }
+   else:
+       raise HTTPException(status_code=500, detail='Error al buscar Permiso')
+
+@app.get('/Permiso')
+def obtener_Permiso_all():
+   Permiso = list(collection_Permiso.find())
+   return {'Permiso': Permiso}
+
+@app.get('/Permiso/{id}')
+def obtener_Permiso(id: int):
+   Permiso = list(collection_Permiso.find_one({'_id':id}))
+   if Permiso:
+       return {'Permiso': Permiso}
+   else:
+       raise HTTPException(status_code=404, detail='Permiso no encontrado')
 
 if __name__ == '__main__':
    uvicorn.run(app, host='0.0.0.0', port=8000)
