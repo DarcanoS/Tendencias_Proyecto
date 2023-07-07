@@ -50,7 +50,7 @@ pip install -r requirements.txt
 
 - Crea una cuenta en MongoDB Atlas si aún no tienes una.
 - Crea un clúster y obtén la cadena de conexión.
-- En el archivo `main.py`, reemplaza `mongodb+srv://usuarioGeneral:ZWxGjUdSO9zffFwP@ud.wbeofk5.mongodb.net/?retryWrites=true&w=majority` con tu cadena de conexión. Esta cadena la puedes obtener de MongoAtlas, seleccionando que realizas la conexion con PyMongo en su ultima versión.
+- En el archivo `main.py`, reemplaza la variable **uri** con tu cadena de conexión. Esta cadena la puedes obtener de MongoAtlas, seleccionando que realizas la conexion con PyMongo en su ultima versión.
 
 ## Ejecución
 

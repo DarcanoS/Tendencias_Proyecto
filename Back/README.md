@@ -1,6 +1,6 @@
-# Flask Validate XML App
+# FastAPI CRUD App
 
-Esta es una aplicación que lee y procesa un XML. Además de generar el codigo del API en lenguaje Python.
+Esta es una aplicación de ejemplo que utiliza el framework FastAPI y MongoDB Atlas para implementar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en una base de datos.
 
 ## Instalación
 
@@ -8,7 +8,7 @@ Esta es una aplicación que lee y procesa un XML. Además de generar el codigo d
 1. Ve al directorio del proyecto:
 
 ```
-cd Back
+cd Microservice
 ```
 
 2. Crea un entorno virtual para la aplicación:
@@ -46,24 +46,49 @@ pip install -r requirements.txt
 ```
 
 
+5. Configuración de la base de datos:
+
+- Crea una cuenta en MongoDB Atlas si aún no tienes una.
+- Crea un clúster y obtén la cadena de conexión.
+- En el archivo `main.py`, reemplaza la variable **uri** con tu cadena de conexión. Esta cadena la puedes obtener de MongoAtlas, seleccionando que realizas la conexion con PyMongo en su ultima versión.
+
 ## Ejecución
 
 1. Asegúrate de que el entorno virtual esté activado.
 
-2. Ejecuta el siguiente comando para iniciar el servidor Flask:
+2. Ejecuta el siguiente comando para iniciar el servidor FastAPI:
 ```
-python app.py
+uvicorn main:app --reload
 ```
 
 
 3. Accede a la aplicación en tu navegador web:
 
-        http://localhost:5000
+        http://localhost:8000
 
 
-## Uso
+## Uso (Ejemplo de *Productos*)
 
-- Para validar el XML y retornar un comprimido con el Codigo Fuente.
+- Para obtener todos los productos, envía una solicitud GET a la siguiente URL:
 
-        http://localhost:8000/validate-xml
+        http://localhost:8000/productos
+
+- Para obtener un producto por su ID, envía una solicitud GET a la siguiente URL, reemplazando `{id}` con el ID del producto:
+
+        http://localhost:8000/productos/{id}
+
+
+- Para agregar un nuevo producto, envía una solicitud POST a la siguiente URL con los datos del producto en el cuerpo de la solicitud como JSON:
+
+        http://localhost:8000/productos
+
+
+- Para actualizar un producto existente, envía una solicitud PUT a la siguiente URL, reemplazando `{id}` con el ID del producto y proporcionando los nuevos datos del producto en el cuerpo de la solicitud como JSON:
+
+        http://localhost:8000/productos/{id}
+
+
+- Para eliminar un producto, envía una solicitud DELETE a la siguiente URL, reemplazando `{id}` con el ID del producto:
+
+        http://localhost:8000/productos/{id}
 
