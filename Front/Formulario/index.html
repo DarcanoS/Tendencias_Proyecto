@@ -23,25 +23,14 @@
             <input type="text" class="formulario__input" name="nombreEntidad">
             <label for="" class="formulario__label">Nombre:</label>
 
-
-            <h2 class="formulario__titulo" id="atributoPrimario">Atributo Primario:</h2>
-            <div class="cl">
-                <input type="text" class="formulario__input" name="nombreAtributo">
-                <label for="" class="formulario__label">Nombre:</label>
-                <select name="TipoAtributo" class="formulario__input">
-                    <option value="String">String</option>
-                    <option value="Int32">Int(32)</option>
-                </select>
-            </div>
-
             <h2 class="formulario__titulo" id="atributo">Atributo:</h2>
             <label class="formulario__boton" onclick=" duplicar( this ) ">Agregar nuevo Atributo</label>
             <div class="cl">
                 <input type="text" name="nombreAtributo" class="formulario__input">
                 <label for="" class="formulario__label">Nombre:</label>
-                <select name="TipoAtributo" class="formulario__input">
-                    <option value="String">String</option>
-                    <option value="Int32">Int(32)</option>
+                <select name="tipoAtributo" class="formulario__input">
+                    <option value="str">String</option>
+                    <option value="int">Int(32)</option>
                 </select>
             </div>
             <div id="contenedor"> </div>
@@ -49,7 +38,7 @@
             <h2 class="formulario__titulo" id="Servicio">Servicio:</h2>
             <label class="formulario__boton" onclick=" duplicar( this ) "> Agregar nuevo Servicio</label>
             <div class="cl">
-                <select name="TipoServicio" class="formulario__input">
+                <select name="tipoServicio" class="formulario__input">
                     <option value="update">update</option>
                     <option value="create">create</option>
                     <option value="delete">delete</option>

@@ -7,13 +7,15 @@
                     <xs:complexType>
                         <xs:sequence>
                             <!-- Nombre de la Tabla de la base de datos -->
-                            <xs:element name="nombreEntidad" type="xs:string" />
+                            <xs:element name="nombreEntidad" maxOccurs="1" type="xs:string" />
                             <!-- Atributo o Columna de la Tabla de la Base de Datos -->
-                            <xs:element name="atributo" minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="atributo" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="nombreAtributo" type="xs:string" />
-                                        <xs:element name="tipoAtributo" type="xs:string" />
+                                        <xs:element name="nombreAtributo" maxOccurs="1"
+                                            type="xs:string" />
+                                        <xs:element name="tipoAtributo" maxOccurs="1"
+                                            type="xs:string" />
                                         <xs:element name="restricionAtributo" type="xs:string"
                                             minOccurs="0"
                                             maxOccurs="unbounded" />
@@ -22,7 +24,8 @@
                             </xs:element>
                             <!-- El atributo primario es la llave de la entidad, debe tener minimo
                             una, puede tener llaves compuestas -->
-                            <!-- <xs:element name="atributoPrimario" minOccurs="1" maxOccurs="unbounded">
+                            <!-- <xs:element name="atributoPrimario" minOccurs="1"
+                            maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="nombreAtributo" type="xs:string" />
@@ -33,12 +36,12 @@
                                 </xs:complexType>
                             </xs:element> -->
                             <!-- Este vendría a ser el EndPoint -->
-                            <xs:element name="Servicio" minOccurs="0" maxOccurs="5">
+                            <xs:element name="Servicio" minOccurs="1" maxOccurs="5">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="tipoServicio">
+                                        <xs:element name="tipoServicio" minOccurs="1" maxOccurs="1">
                                             <xs:simpleType>
-                                                <xs:restriction base="xs:string">
+                                                <xs:restriction base="xs:string" >
                                                     <xs:enumeration value="update" />
                                                     <xs:enumeration value="create" />
                                                     <xs:enumeration value="delete" />
@@ -48,7 +51,7 @@
                                             </xs:simpleType>
                                         </xs:element>
                                         <!-- Nombre del EndPoint -->
-                                        <xs:element name="nombreServicio" minOccurs="0">
+                                        <xs:element name="nombreServicio" minOccurs="0" maxOccurs="1">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
                                                     <!-- No puede tener espacios, ya que el nombre
@@ -66,12 +69,12 @@
                 <xs:element name="Conexion" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="url" type="xs:string" />
-                            <xs:element name="puerto" type="xs:integer" />
+                            <xs:element name="url" minOccurs="0" type="xs:string" />
+                            <xs:element name="puerto" minOccurs="0" type="xs:integer" />
                             <xs:element name="database" type="xs:string" />
-                            <xs:element name="usuario" type="xs:string" />
-                            <xs:element name="password" type="xs:string" />
-                            <xs:element name="controlador" type="xs:string" />
+                            <xs:element name="usuario" minOccurs="0" type="xs:string" />
+                            <xs:element name="password" minOccurs="0" type="xs:string" />
+                            <xs:element name="controlador" minOccurs="0" type="xs:string" />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

@@ -74,141 +74,48 @@ function crearXML() {
   const rootElement = xmlDoc.documentElement;
 
   var a = document.querySelectorAll("h2");
+  var elementPadre = xmlDoc.createElement("Entidades");
+  var elementHijo = xmlDoc.createElement("atributo");
   formData.forEach((value, key, parent) => {
-    const element = xmlDoc.createElement(key);
-    element.textContent = value;
+    console.log("KEY:", key, "VALUE:", value);
+    if (key === "nombreEntidad") {
+      elementPadre = xmlDoc.createElement("Entidades");
+    } else if (key === "url") {
+      elementPadre = xmlDoc.createElement("Conexion");
+    } else if (key === "nombreAtributo") {
+      elementHijo = xmlDoc.createElement("atributo");
+    } else if (key === "tipoServicio") {
+      elementHijo = xmlDoc.createElement("Servicio");
+    }
 
+    if (value) {
+      const element = xmlDoc.createElement(key);
+      element.textContent = value;
 
+      if (key === "nombreAtributo" || key === "tipoAtributo" || key === "tipoServicio" || key === "nombreServicio") {
+        elementHijo.appendChild(element);
+        elementPadre.appendChild(elementHijo);
+      } else {
+        elementPadre.appendChild(element);
+        rootElement.appendChild(elementPadre);
+      }
+    }
 
     rootElement.setAttributeNode(encabezado1);
     rootElement.setAttributeNode(encabezado2);
-    rootElement.appendChild(element);
-
-
   });
   const serializer = new XMLSerializer();
   const xmlString = serializer.serializeToString(xmlDoc);
-  console.log(xmlString);
+  console.log(xmlString)
   console.log(xmlDoc);
   return xmlString;
 }
 
-/*
-function agregarNodosPadre(xmlVariable) {
-  // Crear un objeto DOMParser para analizar el XML
-  var parser = new DOMParser();
-
-  // Analizar la variable XML en un objeto Document
-  var xmlDoc = parser.parseFromString(xmlVariable, "text/xml");
-
-  // Obtener el elemento raíz del XML
-  var rootElement = xmlDoc.documentElement;
-
-  // Crear un nuevo nodo padre
-  var enti = xmlDoc.createElement("Entidades");
-  var noditos = rootElement.childNodes;
-  // Mover los nodos hijos existentes al nuevo nodo padre
-  //while (rootElement.firstChild) {
-    for (var i =0;i<noditos.length;i++){
-      if(noditos[i].textContent=="nombreEntidad"){
-        console.log(noditos[i].textContent);
-      }
-
-    }
-      enti.appendChild(rootElement.firstChild);
-  //}
-  // Agregar el nuevo nodo padre como hijo del elemento raíz
-  rootElement.appendChild(enti);
-
-  // Serializar el documento XML modificado de vuelta a una cadena XML
-  var xmlModificado = new XMLSerializer().serializeToString(xmlDoc);
-
-  // Devolver el XML modificado
-  return xmlModificado;
-}*/
-
-
-
-// function crearXML() {
-
-
-
-//   // Obtener las claves y valores del formulario
-//   var clavesValores = [];
-//   for (var i = 0; i < formulario.elements.length; i++) {
-//     var elemento = formulario.elements[i];
-//     if (elemento.type !== "submit") {
-//       clavesValores.push({
-//         clave: elemento.name,
-//         valor: elemento.value
-//       });
-//     }
-//   }
-//   // Crear un objeto XMLDocument
-
-//   var xmlDoc = document.implementation.createDocument(null, 'App');
-
-//   // Obtener el formulario y los nodos contenedores
-//   var nodosContenedores = document.getElementsByClassName("cl");
-//   var nodoContenedor;
-//   var nodito = [];
-//   for (var i = 0; i < nodosContenedores.length; i++) {
-//     nodito[i] = nodosContenedores[i].id;
-//     console.log(nodito[i]);
-//     nodoContenedor = xmlDoc.createElement(nodito[i]);
-//   }
-//   //console.log(nodoContenedor);
-//   // Recorrer las claves y valores
-//   for (var i = 0; i < clavesValores.length; i++) {
-
-//     var clave = clavesValores[i].clave;
-//     var valor = clavesValores[i].valor;
-
-//     // Crear un nodo para la clave
-//     var nodoClave = xmlDoc.createElement(clave);
-//     // Asignar el valor al nodo de la clave
-//     nodoClave.appendChild(xmlDoc.createTextNode(valor));
-
-//     if (i == 0) {
-//       nodoContenedor.appendChild(nodoClave);
-//     } else if (i == 1 || i == 2) {
-//       nodoContenedor.appendChild(nodoClave);
-//     } else if (i == 3 || i == 4) {
-//       nodoContenedor.appendChild(nodoClave);
-//     } else if (i == 5 || i == 6) {
-//       nodoContenedor.appendChild(nodoClave);
-//     } else {
-//       nodoContenedor.appendChild(nodoClave);
-//     }
-
-
-//     // Agregar el nodo clave al nodo contenedor
-
-//     //console.log(nodoContenedor);
-
-//   }
-//   // Serializar el objeto XMLDocument a una cadena XML
-//   var serializer = new XMLSerializer();
-//   var xmlString = serializer.serializeToString(xmlDoc);
-
-//   // Aquí puedes guardar o hacer algo con la cadena XML generada
-//   console.log(xmlDoc);
-//   console.log(xmlString);
-// }
-
-
-
-
 
 formulario.addEventListener("submit", (e) => {
   e.preventDefault();
-  //const datos = crearXML(e);
 
-  // Llamar a la función para crear el archivo XML
   const datos = crearXML();
- /* var xmlModificado = agregarNodosPadre(datos);
-  console.log(xmlModificado);
-*/
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/xml");
@@ -216,22 +123,49 @@ formulario.addEventListener("submit", (e) => {
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
-    body: datos.textContent,
+    body: datos,
     redirect: 'follow'
   };
 
   fetch('http://localhost:5000/validate-xml', requestOptions)
     .then(response => {
-      if (response.ok) {
-        return response.text();
+      if (response.headers.get('content-type') === 'application/json') {
+        return response.json();
+      } else {
+        // Si la respuesta es un archivo, crear un enlace de descarga y descargarlo automáticamente
+        return response.blob().then(blob => {
+          // Crear un objeto URL para el blob del archivo recibido
+          const url = window.URL.createObjectURL(blob);
+
+          // Crear un elemento de enlace de descarga
+          const link = document.createElement('a');
+          link.href = url;
+
+          // Establecer el nombre del archivo
+          link.download = 'archivo.zip';
+
+          // Simular un clic en el enlace para iniciar la descarga
+          link.click();
+
+          // Liberar el objeto URL
+          window.URL.revokeObjectURL(url);
+        });
       }
-      throw new Error('Error en la petición POST');
     })
     .then(data => {
-      console.log('Respuesta del servidor:', data);
+      if (data) {
+        console.log("Data Response:", data);
+        alerta = "Status: " + data.status + ".\nMensaje: " + data.message.replace('XML', 'FORMULARIO');
+        if (data.error) {
+          alerta = alerta + "\nERROR: " + data.error.replace('XML', 'FORMULARIO');
+        }
+        alert(alerta);
+      }
     })
     .catch(error => {
-      console.error('Error:', error);
+      // Manejar cualquier error
+      console.error(error);
+      alert(error);
     });
 
 });

@@ -105,6 +105,8 @@ def construirMicro(jsonData):
     # Obtener los datos necesarios
     conexion = jsonData["Conexion"]
     entidades = jsonData["Entidades"]
+    if "atributo" in entidades:
+        entidades = [entidades]
 
     llave_aux_izq = "{"
     llave_aux_der = "}"
@@ -127,9 +129,11 @@ def construirMicro(jsonData):
             file.write(f"class {nombre_entidad}In(BaseModel):\n")
             file.write(f"   id: int\n")
 
-            atributo = entidad["atributo"]
-            if isinstance(atributo, list):
-                for atributo in atributo:
+            atributos = entidad["atributo"]
+            if "nombreAtributo" in atributos:
+                atributos = [atributos]
+            if isinstance(atributos, list):
+                for atributo in atributos:
                     nombre_atributo = atributo["nombreAtributo"]
                     tipo_atributo = atributo["tipoAtributo"]
                     file.write(f"   {nombre_atributo}: {tipo_atributo}\n")
@@ -140,9 +144,11 @@ def construirMicro(jsonData):
             file.write(f"#Definicion del modelo {nombre_entidad} UPDATE\n")
             file.write(f"class {nombre_entidad}InUP(BaseModel):\n")
 
-            atributo = entidad["atributo"]
-            if isinstance(atributo, list):
-                for atributo in atributo:
+            atributos = entidad["atributo"]
+            if "nombreAtributo" in atributos:
+                atributos = [atributos]
+            if isinstance(atributos, list):
+                for atributo in atributos:
                     nombre_atributo = atributo["nombreAtributo"]
                     tipo_atributo = atributo["tipoAtributo"]
                     file.write(f"   {nombre_atributo}: {tipo_atributo}\n")
@@ -154,16 +160,18 @@ def construirMicro(jsonData):
             file.write(f"class {nombre_entidad}Out(BaseModel):\n")
             file.write(f"   id: int\n")
 
-            atributo = entidad["atributo"]
-            if isinstance(atributo, list):
-                for atributo in atributo:
+            atributos = entidad["atributo"]
+            if "nombreAtributo" in atributos:
+                atributos = [atributos]
+            if isinstance(atributos, list):
+                for atributo in atributos:
                     nombre_atributo = atributo["nombreAtributo"]
                     tipo_atributo = atributo["tipoAtributo"]
                     file.write(f"   {nombre_atributo}: {tipo_atributo}\n")
 
             file.write(f"\n")
 
-        url_conexion = conexion["url"]
+        # url_conexion = conexion["url"]
         # file.write(f"uri ='{url_conexion}'\n")
         file.write(
             f"uri ='mongodb+srv://usuarioGeneral:ZWxGjUdSO9zffFwP@ud.wbeofk5.mongodb.net/?retryWrites=true&w=majority'\n"
@@ -198,6 +206,8 @@ def construirMicro(jsonData):
         file.write(f"\n")
         for entidad in entidades:
             servicios = entidad["Servicio"]
+            if "tipoServicio" in servicios:
+                servicios = [servicios]
             nombre_entidad = entidad["nombreEntidad"]
             nombre_servicio = nombre_entidad
 
@@ -244,6 +254,8 @@ def construirMicro(jsonData):
                         f"   nuevo_{nombre_entidad} = {llave_aux_izq}'_id':{nombre_entidad}.id"
                     )
                     atributos = entidad["atributo"]
+                    if "nombreAtributo" in atributos:
+                        atributos = [atributos]
                     for atributo in atributos:
                         nombre_atributo = atributo["nombreAtributo"]
                         file.write(
@@ -276,6 +288,8 @@ def construirMicro(jsonData):
                         f"   nuevo_{nombre_entidad} = {llave_aux_izq}'$set': {llave_aux_izq}"
                     )
                     atributos = entidad["atributo"]
+                    if "nombreAtributo" in atributos:
+                        atributos = [atributos]
                     for atributo in atributos:
                         nombre_atributo = atributo["nombreAtributo"]
                         file.write(

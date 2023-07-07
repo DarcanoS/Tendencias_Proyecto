@@ -1,62 +1,85 @@
-<?xml version="1.0"?>
-
-<!-- xmlns="http://www.w3schools.com"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="./ MicroSerFor.xsd" -->
-<App
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="./MicroSerFor.xsd">
+<App xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./MicroSerFor.xsd">
     <Entidades>
-        <nombreEntidad>Producto</nombreEntidad>
+        <nombreEntidad>Fruta</nombreEntidad>
         <atributo>
-            <nombreAtributo>Nombre</nombreAtributo>
-            <tipoAtributo>VARCHAR(20)</tipoAtributo>
-            <restricionAtributo>NOT NULL</restricionAtributo>
-            <restricionAtributo>NOT NULL</restricionAtributo>
+            <nombreAtributo>nombreFruta</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
         </atributo>
-        <atributoPrimario>
-            <nombreAtributo>ID</nombreAtributo>
-            <tipoAtributo>Integer</tipoAtributo>
-            <restricionAtributo>NOT NULL</restricionAtributo>
-        </atributoPrimario>
+        <atributo>
+            <nombreAtributo>color</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>textura</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>sabor</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>cantSemillas</nombreAtributo>
+            <tipoAtributo>int</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>paisOrigen</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
         <Servicio>
-            <tipoServicio>create</tipoServicio>
-            <nombreServicio>crearProducto</nombreServicio>
+            <tipoServicio>readOne</tipoServicio>
         </Servicio>
         <Servicio>
             <tipoServicio>readAll</tipoServicio>
-            <nombreServicio>ObtenerProductos</nombreServicio>
         </Servicio>
-    </Entidades>
-    <Entidades>
-        <nombreEntidad>Inventario</nombreEntidad>
-        <atributoPrimario>
-            <nombreAtributo>ID</nombreAtributo>
-            <tipoAtributo>Integer</tipoAtributo>
-            <restricionAtributo>NOT NULL</restricionAtributo>
-        </atributoPrimario>
-        <atributoPrimario>
-            <nombreAtributo>IdProducto</nombreAtributo>
-            <tipoAtributo>Integer</tipoAtributo>
-            <restricionAtributo>NOT NULL</restricionAtributo>
-        </atributoPrimario>
         <Servicio>
             <tipoServicio>create</tipoServicio>
-            <nombreServicio>crearInventario</nombreServicio>
         </Servicio>
         <Servicio>
             <tipoServicio>update</tipoServicio>
-            <nombreServicio>actualizarInventario</nombreServicio>
         </Servicio>
         <Servicio>
             <tipoServicio>delete</tipoServicio>
-            <nombreServicio>eliminarInventario</nombreServicio>
+        </Servicio>
+    </Entidades>
+    <Entidades>
+        <nombreEntidad>Verdura</nombreEntidad>
+        <atributo>
+            <nombreAtributo>vitamina</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>mineral</nombreAtributo>
+            <tipoAtributo>str</tipoAtributo>
+        </atributo>
+        <atributo>
+            <nombreAtributo>tallos</nombreAtributo>
+            <tipoAtributo>int</tipoAtributo>
+        </atributo>
+        <Servicio>
+            <tipoServicio>readOne</tipoServicio>
+            <nombreServicio>buscarVerdura</nombreServicio>
+        </Servicio>
+        <Servicio>
+            <tipoServicio>readAll</tipoServicio>
+            <nombreServicio></nombreServicio>
+        </Servicio>
+        <Servicio>
+            <tipoServicio>create</tipoServicio>
+            <nombreServicio>nuevaVerdura</nombreServicio>
+        </Servicio>
+        <Servicio>
+            <tipoServicio>update</tipoServicio>
+            <nombreServicio>editarVerdura</nombreServicio>
+        </Servicio>
+        <Servicio>
+            <tipoServicio>delete</tipoServicio>
+            <nombreServicio></nombreServicio>
         </Servicio>
     </Entidades>
     <Conexion>
-        <url>localhost</url>
+        <url>aaa</url>
         <puerto>22</puerto>
-        <database>BasePruebas</database>
+        <database>Tendencias</database>
         <usuario>admin</usuario>
         <password>1234</password>
         <controlador>./aqui/alla</controlador>
