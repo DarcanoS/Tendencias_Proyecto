@@ -106,7 +106,7 @@ def obtener_Usuario_all():
 
 @app.get('/Usuario/{id}')
 def obtener_Usuario(id: int):
-   Usuario = list(collection_Usuario.find_one({'_id':id}))
+   Usuario = collection_Usuario.find_one({'_id':id})
    if Usuario:
        return {'Usuario': Usuario}
    else:

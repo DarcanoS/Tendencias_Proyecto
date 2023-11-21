@@ -232,7 +232,7 @@ def construirMicro(jsonData):
                     )
                     file.write(f"def obtener_{nombre_servicio}(id: int):\n")
                     file.write(
-                        f"   {nombre_entidad} = list(collection_{nombre_entidad}.find_one({llave_aux_izq}'_id':id{llave_aux_der}))\n"
+                        f"   {nombre_entidad} = collection_{nombre_entidad}.find_one({llave_aux_izq}'_id':id{llave_aux_der})\n"
                     )
                     file.write(f"   if {nombre_entidad}:\n")
                     file.write(
